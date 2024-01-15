@@ -1,7 +1,14 @@
-export default function TabButton({ children }) {
+export default function TabButton({ children, onSelect, isSelected }) {
+  console.log('Btn render');
+
   return (
     <li>
-      <button>{children}</button>
+      <button
+        className={isSelected ? 'active' : undefined}
+        onClick={e => onSelect(e.target.textContent)}
+      >
+        {children}
+      </button>
     </li>
   );
 }
