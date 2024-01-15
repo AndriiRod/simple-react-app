@@ -2,6 +2,8 @@ import TabButton from '../TabButton/TabButton.jsx';
 import TabContent from '../TabContent/TabContent.jsx';
 import { EXAMPLES } from '../../data.js';
 import { useState } from 'react';
+import Section from '../Section.jsx';
+import Tabs from '../Tabs.jsx';
 
 import './Examples.css';
 
@@ -11,37 +13,46 @@ export default function Examples() {
     setSelectedTopic(content.toLowerCase());
     console.log(selectedTopic);
   };
+
+  let tabContetnt = <p>Please select topic</p>;
+
+  if (selectedTopic) {
+    tabContetnt = <TabContent {...EXAMPLES[selectedTopic]} />;
+  }
   return (
-    <section id="examples">
-      <h2>Examples</h2>
-      <menu>
-        <TabButton
-          isSelected={selectedTopic === 'components'}
-          onSelect={handleSelect}
-        >
-          Components
-        </TabButton>
-        <TabButton isSelected={selectedTopic === 'jsx'} onSelect={handleSelect}>
-          JSX
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === 'props'}
-          onSelect={handleSelect}
-        >
-          Props
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === 'state'}
-          onSelect={handleSelect}
-        >
-          State
-        </TabButton>
-      </menu>
-      {selectedTopic ? (
-        <TabContent {...EXAMPLES[selectedTopic]} />
-      ) : (
-        'Please select topic'
-      )}
-    </section>
+    <Section title="Examples" id="examples">
+      <Tabs
+        buttons={
+          <>
+            <TabButton
+              isSelected={selectedTopic === 'components'}
+              onClick={e => handleSelect(e.target.textContent)}
+            >
+              Components
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === 'jsx'}
+              onClick={e => handleSelect(e.target.textContent)}
+            >
+              JSX
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === 'props'}
+              onClick={e => handleSelect(e.target.textContent)}
+            >
+              Props
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === 'state'}
+              onClick={e => handleSelect(e.target.textContent)}
+            >
+              State
+            </TabButton>
+          </>
+        }
+      >
+        {tabContetnt}
+      </Tabs>
+    </Section>
   );
 }
